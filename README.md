@@ -10,10 +10,10 @@ La iniciativa para la elección de esta temática fue haber realizado, previamen
 ### Los sprints involucrados en el proyecto son los siguientes:
 1) Lectura del dataset de IMDb.
 2) Limpieza de datos
-  a) Eliminación de marcadores HTML, emoticones irrelevantes.
-  b) Utilización de stopwords para eliminar palabras vacías.
+2a) Eliminación de marcadores HTML, emoticones irrelevantes.
+2b) Utilización de stopwords para eliminar palabras vacías.
 3) Armado de Nube de Palabras para ver cuáles son las más utilizadas en las reviews.
 4) Obtención de palabras raíz mediante el algoritmo de Porter.
 5) Creación y entrenamiento del modelo.
-  a) Método LogisticRegression
-  b) Método RandomForestClassifier
+5) Método LogisticRegression
+5b) Método RandomForestClassifier
