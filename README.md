@@ -12,7 +12,8 @@ La iniciativa para la elección de esta temática fue haber realizado, previamen
 2) Limpieza de datos: 2a) Eliminación de marcadores HTML, emoticones irrelevantes y 2b) Utilización de stopwords para eliminar palabras vacías.
 3) Armado de Nube de Palabras para ver cuáles son las más utilizadas en las reviews.
 4) Obtención de palabras raíz mediante el algoritmo de Porter.
-5) Creación y entrenamiento del modelo: 5a) Método LogisticRegression y 5b) Método RandomForestClassifier
+5) Creación y entrenamiento del modelo: 5a) Método LogisticRegression y 5b) Método RandomForestClassifier.
+6) Creación de Interfaz Gráfica para ingresar nuevas críticas y visualizar si las mismas corresponden a valoracioens positivas o negativas.
 
 <br>
 
@@ -23,3 +24,4 @@ La iniciativa para la elección de esta temática fue haber realizado, previamen
 4) re
 5) nltk
 6) sklearn
+7) tkinter
