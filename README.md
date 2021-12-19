@@ -102,3 +102,4 @@ Lo más importante es cómo indicar que al apretar el botón se ejecute una acci
 <br>
 
 ## Conclusiónes Finales
+A partir de la selección de los métodos de entrenamiento LogisticRegression y RandomForest (los cuales elegimos al azar dentro de los vistos en las clases), observamos que el primero mencionado fue mas acertado a la ahora de la puesta en marcha; obteniendo mayor nivel de intrepetación que RamdomForest. Esto se debió a que el modelo de regresión logísitica interpretativo e informativo, idealmente aplicable ante problemas donde la sintáxis de los términos a analizar son más complejos.
