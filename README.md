@@ -58,12 +58,12 @@ A su vez, las librerías a utilizar son:
 ## Desarrollo de pasos realizados en la Notebook
 En este apartado buscaremos explicar paso a paso la notebook del proyecto final, de manera que se logre entender la lógica seguida y las lineas de código ejecutadas. Para eso iremos viendo cada una de las etapas descriptas previamente.
 
-### Lectura del dataset de IMDb.
+### 1. Lectura del dataset de IMDb.
 En este paso lo primero que se realizó fue la importación de la librería Pandas que, como se mencionó previamente, permite trabajar con datos tabulares y ofrece métodos muy utiles para la manipulación de tablas por lo que será de mucha utilidad a lo largo de todo el proyecto.
 
 En segundo lugar, se crea una variable llamada df que almacenara nuestro dataset, para eso se hace una lectura con el método de Pandas llamada read_csv al cual le indicamos el nombre que tiene el archivo en nuestra computadora. Además, a modo preventivo, le pasamos como parametro encodigo="utf-8" para unificar los diferentes formatos particulares creados en zonas distintas ya que, si bien las reviews estan en inglés, puede tener caracteres que distintas zonas, de esta manera no nos estaremos perdiendo de ninguno.
 
-### Exploración y Limpieza de datos
+### 2. Exploración y Limpieza de datos
 En esta etapa se buscó realizar una exploración para comprender el dataset con el que estamos trabajando, ver sus particularidades y en base a eso hacer la limpieza correspondiente para que quede optimizado de cara al futuro.
 
 A los efectos de responder la primera pregunta de investigación planteada previamente, lo primero que realizamos fue un breve analisis de la varible a predecir, para ver si estamos en presencia de una dataset balanceado o desbalanceado y, en función de ello, si debíamos realizar algun tratamiento adicional. Para ello utilizamos la librería seaborn para graficar a traves de su método countplot ,que recibe la columna y el dataset como parámetro,la variable a predecir y obtuvimos un dataset totalmente balanceado (25000 reviews positivas y 25000 negativas). Esta información nos dió la certeza de que no se requeriran tecnicas como oversampling y subsampling para corregir un desbalanceo. En esta intancia nuevamente se utilizó Pandas.
@@ -76,7 +76,7 @@ Con la limpieza de las reviews volvimos a hacer la nube de palabras para corrobo
 
 Lo último que realizamos para esta etapa del proyecto fue eliminar las stopwords (palabras sin significado como artículos, pronombres, preposiciones, etc) de las reviews para que el aprendizaje del modelo sea más eficiente. Para ello utilizamos la librería nltk y el método stopwords de la misma. Creamos una variable llamada stopwords en donde le indicamos que las palabras vacias que queremos son en el idioma inglés. En este sentido creamos una funcion llamada depuración en donde lo que hacemos es: a traves de nltk.tokenize.word_tokenize para convertir una cadena de texto (en este caso una review) en un lista en donde cada elemento de la lista es una palabra de la cadena de texto (básicamente lo que hacemos es tokenizar un texto), después con una List comprehension obtenemos una lista en donde solo se queda con las palabras (tokens) que no son stopwords (es un proceso similar al que hicimos en la función "limpieza" para crear la nube de palabras pero hecha de manera mas eficiente con una list comprehension). Una vez que contamos con la lista con todas las palabras que no son palabras vacías deshacemos la lista para que nos quede un string. Nuevamente con el metodo apply lo aplicamos a todas las reviews del dataset.
 
-### Creación y entrenamiento de modelo
+### 3. Creación y entrenamiento de modelo
 Una vez que contamos con el dataset totalmente optimizado, el siguiente paso fue la creación del modelo y su entrenamiento. Es en esta instancia en donde entra en juego la libreria sklearn de la cual usaremos: Pipeline,LogisticRegression, CountVectorizer, train_test_split, TfidTransformer
 
 Una vez que tenemos importadas las librerías lo primero que hacemos es crear una variable llamada pipeline para instanciar la clase Pipeline para, de esta manera, gestionar el flujo de trabajo. Primero incluimos ('bow', CountVectorizer()) para que convierta la colección de reviews en una matriz de recuentos de tokens, es decir, toma todas las palabras existentes en el df (recordemos que ya estará optimizado) y, para cada reviews, cuenta cuantas veces aparece. En segundo lugar incluimos ('tfidf', TfidfTransformer()) que va a tomar el resultado de CountVectorizer y le va a asignar un peso relativo a cada palabra de acuerdo a la cantidad de veces que aparece en una misma review y la cantidad de veces que se repite en el resto de las review. En tercer lugar incluimos ('classifier', LogisticRegression(random_state = 42)) que es el modelo de clasificación que seleccionamos para este proyecto (tambien hicimos el mismo proceso con Random Forest y el resultado fue similar).
@@ -85,14 +85,14 @@ Almacenamos en una variable X las reviews y en una variable y los resultados, pa
 
 Ya con el conjunto de datos dividido, entrenamos el modelo con el método fit() guardándolo en una variable para despues realizar la predicción con el método predict() al cual le pasamos como parámetro el subconjunto de prueba (X_test).
 
-### Evaluación del modelo
+### 4. Evaluación del modelo
 Para evaluar el modelo tomamos las métricas de evaluación mas comunes para los modelos de clasificación como el que vimos, siendo estas las clases de sklearn confusion_matrix y classification_report.
 
 Dentro de la matriz de confusión vemos rapidamente que el modelo clasificó correctamente a la gran mayoría de las críticas. Esto se ve reflejado en todas las métricas que obtuvieron un resultado similar. A modo de ejemplo, el Accuracy del 90% nos indica que del total de datos de prueba el modelo acertó el 90% de las veces (13450/15000), a su vez del total de veces que el modelo indicó que la crítica era negativa acerto el 91% mientras que en las criticas positivas el acierto es de un 89%.
 
 Consideramos que los resultados son lo suficientemente precisos para responder correctamente ante nuevas críticas. Lo que ocurre muchas veces en este tipo de trabajos es que la crítica puede resultar ambigua incluso para un ser humano, entonces en esos casos puede ser que el modelo fallé pero en aquellas críticas que son relativamente comprensibles sabemos que el modelo funcionará bien.
 
-### Interfaz Gráfica
+### 5. Interfaz Gráfica
 A los efectos de que el modelo sea utilizado de manera facil e intuitiva por cualquier usuario, se nos ocurrio crear una interfaz gráfica capaz de recibir una nueva crítica y otorgar inmediatamente una devolución respecto al tipo de critica, es decir, si es una critica positiva o negativa.
 
 Para la creación de la interfaz gráfica decidimos utilizar la librería tkinter y con ella lo primero que hacemos es instanciar un objeto, luego con los metodos title() y geometry() le ponemos un titulo y un tamaño, luego incluimos Labels, cuadro de texto y un botón con los métodos Label(),Entry() y Button y con el método grid() los ubicamos dentro del espacio (Frame).
